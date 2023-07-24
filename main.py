@@ -1,4 +1,8 @@
+from repository import Repository
+from service import Service
+
 def main() -> None:
-    pass
+    repos = Repository()
+    service = Service(repos)
 
 main()
