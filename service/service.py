@@ -4,3 +4,6 @@ from typing import Optional
 class Service:
     def __init__(self, repos: Optional[Repository]) -> None:
         self.repos = repos
+
+    def reinit(self) -> None:
+        self.repos.reinit()
