@@ -9,6 +9,7 @@ class Repository:
     def reinit(self) -> None:
         cursor = self.conn.cursor()
         cursor.execute(open('schema.sql', 'r').read())
+        self.conn.commit()
         cursor.close()
 
     def close_db(self) -> None:
