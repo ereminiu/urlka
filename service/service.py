@@ -1,9 +1,11 @@
 from repository.repository import Repository
+from encrypt import Encrypter
 from typing import Optional
 
 class Service:
     def __init__(self, repos: Optional[Repository]) -> None:
         self.repos = repos
+        self.encrypter = Encrypter()
     
     def add_link(self, s: str) -> int:
         """ Relaiton one-to-one, links duplicatets"""
