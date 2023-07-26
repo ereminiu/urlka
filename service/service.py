@@ -20,7 +20,7 @@ class Service:
         return self.repos.get_link(code)
     
     def get_code(self, s: str) -> str:
-        return "Ud4Be"
+        return self.encrypter.get_code(s)
 
     def reinit(self) -> None:
         self.repos.reinit()

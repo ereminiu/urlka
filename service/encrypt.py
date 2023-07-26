@@ -2,5 +2,5 @@ class Encrypter:
     def __init__(self) -> None:
         pass
 
-    def encrypt(self, s: str) -> str:
+    def get_code(self, s: str) -> str:
         return "" 
