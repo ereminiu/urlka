@@ -27,7 +27,7 @@ class Repository:
     
     def insert_link_to_code(self, link_id: int, code_id: int) -> None:
         cursor = self.conn.cursor()
-        cursor.execute("insert into link_to_code \
+        cursor.execute("insert into link_to_code (link_id, code_id) \
                        values (%s, %s)", (link_id, code_id,))
         self.conn.commit()
         cursor.close()
