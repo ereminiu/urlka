@@ -7,13 +7,13 @@ class Service:
         self.repos = repos
         self.encrypter = Encrypter()
     
-    def add_link(self, s: str, custom: str = '') -> None:
+    def add_link(self, link: str) -> None:
         """ Relaiton one-to-one, links duplicatets"""
-        link_id = self.repos.insert_link(s)
-        code = self.get_code(s)
+        link_id = self.repos.insert_link(link)
+        code = self.get_code(link)
         code_id = self.repos.insert_code(code)
         self.repos.insert_link_to_code(link_id, code_id)
-
+    
     def get_link(self, code: str) -> str:
         return self.repos.select_link(code)
     

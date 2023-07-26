@@ -47,7 +47,7 @@ class Repository:
         self.conn.commit()
         cursor.close()
         return link
-
+    
     def reinit(self) -> None:
         """ Migrations """
         cursor = self.conn.cursor()

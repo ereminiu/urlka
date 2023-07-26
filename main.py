@@ -7,7 +7,7 @@ def main() -> None:
     repos = Repository()
     service = Service(repos)
 
-    # service.reinit()
+    service.reinit()
 
     repos.close_db()
 
