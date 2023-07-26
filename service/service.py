@@ -1,5 +1,5 @@
 from repository.repository import Repository
-from encrypt import Encrypter
+from service.encrypt import Encrypter
 from typing import Optional
 
 class Service:
