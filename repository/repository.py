@@ -32,8 +32,21 @@ class Repository:
         self.conn.commit()
         cursor.close()
 
-    def get_link(self, code: str) -> str:
-        pass
+    def select_link(self, code: str) -> str:
+        cursor = self.conn.cursor()
+        cursor.execute("select l.link from links l \
+                       left join link_to_code lc on lc.link_id = l.id \
+                       left join codes c on lc.code_id = c.id \
+                       where c.code = %s", (code,))
+        data = cursor.fetchone()
+        link = ""
+        if data == None:
+            logger.debug("link doesn't found")
+        else:
+            link = data[0]
+        self.conn.commit()
+        cursor.close()
+        return link
 
     def reinit(self) -> None:
         """ Migrations """
