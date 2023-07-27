@@ -1,12 +1,14 @@
 from repository.repository import Repository
 from service.encrypt import Encrypter
 from typing import Optional
+import url_validator
 
 class Service:
     def __init__(self, repos: Optional[Repository]) -> None:
         self.repos = repos
         self.encrypter = Encrypter()
     
+    # TODO: modify retreiving values
     def add_link(self, link: str) -> str:
         """ Relaiton one-to-one, links duplicatets"""
         link_id = self.repos.insert_link(link)
@@ -20,6 +22,9 @@ class Service:
     
     def get_code(self, s: str) -> str:
         return self.encrypter.get_code(s)
+    
+    def check_url(self, link: str) -> bool:
+        return url_validator.check_url(link)
 
     def reinit(self) -> None:
         self.repos.reinit()
