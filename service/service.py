@@ -1,7 +1,7 @@
 from repository.repository import Repository
 from service.encrypt import Encrypter
 from typing import Optional
-import url_validator
+import service.url_validator
 
 class Service:
     def __init__(self, repos: Optional[Repository]) -> None:
@@ -24,7 +24,7 @@ class Service:
         return self.encrypter.get_code(s)
     
     def check_url(self, link: str) -> bool:
-        return url_validator.check_url(link)
+        return service.url_validator.check_url(link)
 
     def reinit(self) -> None:
         self.repos.reinit()
