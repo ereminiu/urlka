@@ -6,6 +6,7 @@ from typing import Tuple
 
 from flask import Flask
 from flask import request
+from flask import redirect
 from models import models
 
 repos = Repository()
@@ -33,6 +34,16 @@ def add_link() -> Tuple[str, int]:
     resp = models.CodeResponse(code=code, \
                                msg="Link has been added.").model_dump_json()
     return resp, 200
+
+@app.route("/getlink", methods=["POST"])
+def get_link() -> Tuple[str, int]:
+    inp = models.CodeRequest.model_validate_json(request.data)
+
+    # TODO: check whether code is valid
+
+    link = service.get_link(inp.code)
+    logger.debug("user has been redirected")
+    return redirect(link, 302)
 
 app.run(host="localhost", port=8000, debug=True)
 repos.close_db()

@@ -7,3 +7,6 @@ class LinkRequest(BaseModel):
 class CodeResponse(BaseModel):
     code: str
     msg: str
+
+class CodeRequest(BaseModel):
+    code: str
