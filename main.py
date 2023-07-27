@@ -2,13 +2,18 @@ from repository.repository import Repository
 from service.service import Service
 from service.encrypt import Encrypter
 from loguru import logger
+from typing import Tuple
 
-def main() -> None:
-    repos = Repository()
-    service = Service(repos)
+from flask import Flask
 
-    service.reinit()
+repos = Repository()
+Service = Service(repos)
 
-    repos.close_db()
+app = Flask(__name__)
 
-main()
+@app.route("/reinit", methods=["POST"])
+def reinit() -> Tuple[str, int]:
+    repos.reinit()
+    return "migrations applied", 200
+
+repos.close_db()
