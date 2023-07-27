@@ -10,3 +10,6 @@ class CodeResponse(BaseModel):
 
 class CodeRequest(BaseModel):
     code: str
+
+class Messenge(BaseModel):
+    msg: str

@@ -23,6 +23,9 @@ class Service:
     def get_code(self, s: str) -> str:
         return self.encrypter.get_code(s)
     
+    def check_code(self, code: str) -> bool:
+        return self.repos.exists_code(code)
+    
     def check_url(self, link: str) -> bool:
         return service.url_validator.check_url(link)
 

@@ -48,6 +48,16 @@ class Repository:
         cursor.close()
         return link
     
+    def exists_code(self, code: str) -> bool:
+        cursor = self.conn.cursor()
+        cursor.execute("select exists(select 1 from codes where code = %s)", (code,))
+        val = cursor.fetchone()
+        if val == None:
+            logger.debug("something went wrong in exists query")
+        self.conn.commit()
+        cursor.close()
+        return val[0]
+    
     def reinit(self) -> None:
         """ Migrations """
         cursor = self.conn.cursor()

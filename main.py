@@ -5,6 +5,7 @@ from loguru import logger
 from typing import Tuple
 
 from flask import Flask
+from flask import Response
 from flask import request
 from flask import redirect
 from models import models
@@ -36,10 +37,12 @@ def add_link() -> Tuple[str, int]:
     return resp, 200
 
 @app.route("/getlink", methods=["POST"])
-def get_link() -> Tuple[str, int]:
+def get_link() -> Tuple[str, int] | Response:
     inp = models.CodeRequest.model_validate_json(request.data)
 
-    # TODO: check whether code is valid
+    if not service.check_code(inp.code):
+        resp = models.Messenge(msg="Code isn't valid.").model_dump_json()
+        return resp, 406
 
     link = service.get_link(inp.code)
     logger.debug("user has been redirected")
