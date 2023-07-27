@@ -1,4 +1,5 @@
 from random import randint
+from random import shuffle
 
 class Encrypter:
     def __init__(self) -> None:
@@ -14,6 +15,9 @@ class Encrypter:
         return sold
     
     def get_hash(self, s: str) -> int:
+        s_array = [c for c in s]
+        shuffle(s_array)
+        s = str(s_array)
         mod = int(1e7)
         base = 37
         res = 0
