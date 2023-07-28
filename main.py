@@ -5,7 +5,7 @@ from loguru import logger
 from typing import Tuple
 
 from flask import Flask
-from flask import Response
+from werkzeug.wrappers import Response
 from flask import request
 from flask import redirect
 from models import models
