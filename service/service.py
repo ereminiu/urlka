@@ -4,7 +4,7 @@ from typing import Optional
 import service.url_validator
 
 class Service:
-    def __init__(self, repos: Optional[Repository]) -> None:
+    def __init__(self, repos: Repository) -> None:
         self.repos = repos
         self.encrypter = Encrypter()
     
