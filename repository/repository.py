@@ -6,17 +6,16 @@ class Repository:
         self.conn = psycopg2.connect("dbname=ys-db user=ys-user password=qwerty port=5432")
         logger.debug("connected to database")
 
-    def insert_link(self, s: str) -> int | None:
+    def insert_link(self, s: str) -> int:
         cursor = self.conn.cursor()
         cursor.execute("insert into links (link) \
                         values (%s) returning id", (s,))
         val = cursor.fetchone()
+        id: int = 0
         if val == None:
             logger.debug("Something went wrong in link insertion")
-            self.conn.commit()
-            cursor.close()
-            return None
-        id, = val
+        else:
+            id, = val
         self.conn.commit()
         cursor.close()
         return id
