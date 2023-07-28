@@ -6,12 +6,17 @@ class Repository:
         self.conn = psycopg2.connect("dbname=ys-db user=ys-user password=qwerty port=5432")
         logger.debug("connected to database")
 
-    def insert_link(self, s: str) -> int:
+    def insert_link(self, s: str) -> int | None:
         cursor = self.conn.cursor()
         cursor.execute("insert into links (link) \
                         values (%s) returning id", (s,))
-        id = cursor.fetchone()
-        # logger.debug(f"id = {id}")
+        val = cursor.fetchone()
+        if val == None:
+            logger.debug("Something went wrong in link insertion")
+            self.conn.commit()
+            cursor.close()
+            return None
+        id, = val
         self.conn.commit()
         cursor.close()
         return id
@@ -20,12 +25,17 @@ class Repository:
         cursor = self.conn.cursor()
         cursor.execute("insert into codes (code) \
                        values (%s) returning id", (code,))
-        id = cursor.fetchone()
+        val = cursor.fetchone()
+        id: int = -1
+        if val != None:
+            id, = val
+        else:
+            logger.debug("something went wrong with code insertion")
         self.conn.commit()
         cursor.close()
         return id
     
-    def insert_link_to_code(self, link_id: int, code_id: int) -> None:
+    def insert_link_to_code(self, link_id: int, code_id: int):
         cursor = self.conn.cursor()
         cursor.execute("insert into link_to_code (link_id, code_id) \
                        values (%s, %s)", (link_id, code_id,))
@@ -52,11 +62,14 @@ class Repository:
         cursor = self.conn.cursor()
         cursor.execute("select exists(select 1 from codes where code = %s)", (code,))
         val = cursor.fetchone()
+        exists: bool = False
         if val == None:
             logger.debug("something went wrong in exists query")
+        else:
+            exists, = val
         self.conn.commit()
         cursor.close()
-        return val[0]
+        return exists
     
     def reinit(self) -> None:
         """ Migrations """
